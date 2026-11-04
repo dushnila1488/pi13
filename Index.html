@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цветы от Джостара | Бутик авторской флористики</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        botanic: {
+                            bg: '#FAF8F5',
+                            card: '#F3EFEA',
+                            dark: '#2C352D',
+                            olive: '#5A6B5C',
+                            accent: '#8C6D53',
+                            cream: '#E9E3D8',
+                            terracotta: '#A8573E'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF8F5;
+            color: #2C352D;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+    </style>
+</head>
+<body class="bg-[#FAF8F5] text-[#2C352D] min-h-screen flex flex-col selection:bg-[#5A6B5C] selection:text-white">
+
+    <!-- Notification Toast -->
+    <div id="notification" class="fixed top-6 right-6 z-50 transform translate-y-[-200%] transition-transform duration-300 bg-[#2C352D] text-[#FAF8F5] px-6 py-4 rounded-xl shadow-xl flex items-center space-x-3 max-w-sm border border-[#5A6B5C]">
+        <div class="text-[#8C6D53] text-xl"><i class="fa-solid fa-leaf"></i></div>
+        <div>
+            <h4 class="font-serif text-sm font-semibold tracking-wide" id="notif-title">Уведомление</h4>
+            <p class="text-xs text-gray-300" id="notif-text">Сообщение...</p>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E9E3D8]">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-[#5A6B5C] text-2xl"><i class="fa-solid fa-spa"></i></span>
+                <a href="#" class="font-serif text-xl md:text-2xl font-bold tracking-wide text-[#2C352D]">Цветы от Джостара</a>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium tracking-wide">
+                <a href="#catalog" class="hover:text-[#8C6D53] transition duration-200">Коллекция</a>
+                <a href="#about" class="hover:text-[#8C6D53] transition duration-200">О нас</a>
+                <a href="#delivery" class="hover:text-[#8C6D53] transition duration-200">Доставка</a>
+                <a href="#contacts" class="hover:text-[#8C6D53] transition duration-200">Контакты</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button onclick="openCart()" class="relative bg-[#2C352D] hover:bg-[#5A6B5C] text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center space-x-2">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span id="cart-count" class="bg-[#8C6D53] text-white px-1.5 py-0.5 rounded-full text-xs font-semibold">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 md:py-32 px-6 container mx-auto text-center max-w-4xl">
+        <span class="text-xs uppercase tracking-widest text-[#5A6B5C] font-semibold mb-4 inline-block bg-[#E9E3D8] px-3 py-1 rounded-full">Авторская флористика с историей</span>
+        <h1 class="text-4xl md:text-6xl font-serif font-bold text-[#2C352D] mb-6 leading-tight">
+            Элегантность природы, выращенная с душой и заботой
+        </h1>
+        <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+            Мы создаем изысканные букеты для особенных моментов вашей жизни. Отборные цветы, гармоничные сочетания и безупречный вкус, берущий начало в традициях старой Англии.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#catalog" class="bg-[#2C352D] hover:bg-[#5A6B5C] text-white px-8 py-3.5 rounded-xl text-sm font-medium transition shadow-sm">
+                Выбрать букет
+            </a>
+            <a href="#about" class="bg-[#F3EFEA] hover:bg-[#E9E3D8] text-[#2C352D] border border-[#E9E3D8] px-8 py-3.5 rounded-xl text-sm font-medium transition">
+                История мастерской
+            </a>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="catalog" class="py-20 px-6 bg-[#F3EFEA]">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-[#2C352D] mb-3">Коллекция букетов</h2>
+                <p class="text-gray-600 text-sm max-w-md mx-auto font-light">Каждая композиция собирается флористами вручную в день заказа из свежайших растений.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="bouquet-grid">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 container mx-auto max-w-5xl">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-xs uppercase tracking-widest text-[#5A6B5C] font-semibold mb-2 inline-block">Традиции качества</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-[#2C352D] mb-6">Основано на принципах благородства и стиля</h2>
+                <p class="text-gray-600 mb-4 font-light leading-relaxed">
+                    История нашего дела берет начало в викторианской Англии. Основатель мастерской, Джордж Джостар, заложил непреложные стандарты: только лучшие сорта роз, орхидей и сезонных полевых цветов, собранные в идеальных пропорциях.
+                </p>
+                <p class="text-gray-600 mb-6 font-light leading-relaxed">
+                    Мы верим, что правильный букет способен не просто украсить комнату, но и рассказать историю, выразить глубокое уважение или подарить искреннюю улыбку близкому человеку.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-4 border-t border-[#E9E3D8]">
+                    <div>
+                        <div class="text-2xl font-serif font-bold text-[#2C352D]">100%</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Свежесть бутонов</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-serif font-bold text-[#2C352D]">До 2 часов</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mt-1">Бережная доставка</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-[#FAF8F5] p-8 rounded-2xl border border-[#E9E3D8] shadow-sm">
+                <h3 class="font-serif text-xl font-bold text-[#2C352D] mb-4">Наши гарантии</h3>
+                <ul class="space-y-4 text-sm text-gray-600 font-light">
+                    <li class="flex items-start space-x-3">
+                        <span class="text-[#5A6B5C] mt-0.5"><i class="fa-solid fa-check"></i></span>
+                        <span>Бесплатная подкормка для продления жизни срезанных цветов в подарок к каждому заказу.</span>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <span class="text-[#5A6B5C] mt-0.5"><i class="fa-solid fa-check"></i></span>
+                        <span>Фирменная крафтовая упаковка и открытка с вашими пожеланиями от руки.</span>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <span class="text-[#5A6B5C] mt-0.5"><i class="fa-solid fa-check"></i></span>
+                        <span>Фотоотчет готового букета перед отправкой получателю.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order / Contact Section -->
+    <section id="contacts" class="py-20 px-6 bg-[#F3EFEA] border-t border-[#E9E3D8]">
+        <div class="container mx-auto max-w-3xl">
+            <div class="bg-[#FAF8F5] p-8 md:p-12 rounded-2xl border border-[#E9E3D8] shadow-sm">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-serif font-bold text-[#2C352D] mb-2">Оформить заказ</h2>
+                    <p class="text-gray-600 text-sm font-light">Заполните форму, и наш менеджер свяжется с вами для подтверждения деталей.</p>
+                </div>
+
+                <form id="order-form" onsubmit="submitOrder(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">Ваше имя</label>
+                            <input type="text" id="order-name" required class="w-full bg-[#FAF8F5] border border-[#E9E3D8] rounded-xl px-4 py-3 text-sm text-[#2C352D] focus:outline-none focus:border-[#5A6B5C]" placeholder="Джонатан Джостар">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">Телефон</label>
+                            <input type="tel" id="order-phone" required class="w-full bg-[#FAF8F5] border border-[#E9E3D8] rounded-xl px-4 py-3 text-sm text-[#2C352D] focus:outline-none focus:border-[#5A6B5C]" placeholder="+7 (999) 000-00-00">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">Выберите букет</label>
+                        <select id="order-bouquet" class="w-full bg-[#FAF8F5] border border-[#E9E3D8] rounded-xl px-4 py-3 text-sm text-[#2C352D] focus:outline-none focus:border-[#5A6B5C]">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">Адрес и время доставки</label>
+                        <textarea id="order-address" rows="3" required class="w-full bg-[#FAF8F5] border border-[#E9E3D8] rounded-xl px-4 py-3 text-sm text-[#2C352D] focus:outline-none focus:border-[#5A6B5C]" placeholder="Укажите адрес и удобное время..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-[#2C352D] hover:bg-[#5A6B5C] text-white py-3.5 rounded-xl text-sm font-medium transition shadow-sm">
+                        Отправить заказ
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal / Slide-over -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex justify-end">
+        <div class="w-full max-w-md bg-[#FAF8F5] border-l border-[#E9E3D8] h-full flex flex-col p-6 shadow-2xl overflow-y-auto">
+            <div class="flex justify-between items-center pb-4 border-b border-[#E9E3D8]">
+                <h3 class="text-xl font-serif font-bold text-[#2C352D]">Ваша корзина</h3>
+                <button onclick="closeCart()" class="text-gray-400 hover:text-[#2C352D] text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div id="cart-items" class="flex-1 my-6 space-y-4 overflow-y-auto">
+                <!-- Cart items list -->
+            </div>
+
+            <div class="border-t border-[#E9E3D8] pt-4">
+                <div class="flex justify-between items-center text-base font-semibold mb-4 text-[#2C352D]">
+                    <span>Итого:</span>
+                    <span id="cart-total" class="font-serif text-xl">0 ₽</span>
+                </div>
+                <button onclick="checkoutCart()" class="w-full bg-[#2C352D] hover:bg-[#5A6B5C] text-white py-3 rounded-xl text-sm font-medium transition">
+                    Оформить из корзины
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#FAF8F5] border-t border-[#E9E3D8] py-12 px-6 text-center text-gray-500 text-sm">
+        <div class="container mx-auto max-w-4xl">
+            <h3 class="font-serif text-xl font-bold text-[#2C352D] mb-2">Цветы от Джостара</h3>
+            <p class="text-xs text-gray-400 mb-6 font-light">Изысканная флористика с заботой о каждой детали. Все права защищены.</p>
+            <div class="flex justify-center space-x-6 text-base text-[#5A6B5C]">
+                <a href="#" class="hover:text-[#2C352D] transition"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" class="hover:text-[#2C352D] transition"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#" class="hover:text-[#2C352D] transition"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const bouquets = [
+            {
+                id: 1,
+                name: "Утренний Лондон",
+                price: 4500,
+                desc: "Изысканная композиция из глубоких бордовых роз, кремовых эустом и тонких веточек зелени.",
+                image: "https://placehold.co/600x400/E9E3D8/2C352D?text=London+Morning",
+                tag: "Бестселлер"
+            },
+            {
+                id: 2,
+                name: "Аристократ",
+                price: 5200,
+                desc: "Благородные белые гортензии в сочетании с утонченными белыми розами и эвкалиптом.",
+                image: "https://placehold.co/600x400/F3EFEA/2C352D?text=Aristocrat",
+                tag: "Классика"
+            },
+            {
+                id: 3,
+                name: "Сады поместья",
+                price: 3900,
+                desc: "Нежный микс из пастельных пионов, кустовых роз и полевых сезонных трав.",
+                image: "https://placehold.co/600x400/FAF8F5/5A6B5C?text=Estate+Gardens",
+                tag: "Новинка"
+            },
+            {
+                id: 4,
+                name: "Викторианский романс",
+                price: 4800,
+                desc: "Роскошные розовые пионовидные розы с добавлением хлопковых коробочек и лаванды.",
+                image: "https://placehold.co/600x400/E9E3D8/8C6D53?text=Victorian+Romance",
+                tag: "Популярное"
+            },
+            {
+                id: 5,
+                name: "Оливковая роща",
+                price: 4100,
+                desc: "Уютный моно-букет из тюльпанов и ветвей оливы в стильной матовой упаковке.",
+                image: "https://placehold.co/600x400/F3EFEA/5A6B5C?text=Olive+Grove",
+                tag: "Свежесть"
+            },
+            {
+                id: 6,
+                name: "Золотое наследие",
+                price: 5600,
+                desc: "Премиальная композиция из солнечных ранункулюсов, кремовых роз и декоративных злаков.",
+                image: "https://placehold.co/600x400/FAF8F5/2C352D?text=Golden+Heritage",
+                tag: "Премиум"
+            }
+        ];
+
+        let cart = [];
+
+        function renderCatalog() {
+            const grid = document.getElementById('bouquet-grid');
+            const select = document.getElementById('order-bouquet');
+            
+            grid.innerHTML = '';
+            select.innerHTML = '';
+
+            bouquets.forEach(item => {
+                grid.innerHTML += `
+                    <div class="bg-[#FAF8F5] rounded-2xl overflow-hidden border border-[#E9E3D8] flex flex-col justify-between shadow-xs hover:shadow-md transition duration-200">
+                        <div class="relative">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-56 object-cover">
+                            <span class="absolute top-3 left-3 bg-[#FAF8F5]/90 backdrop-blur-xs text-[#2C352D] text-xs font-medium px-3 py-1 rounded-full border border-[#E9E3D8]">${item.tag}</span>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-serif text-xl font-bold text-[#2C352D] mb-2">${item.name}</h3>
+                                <p class="text-gray-600 text-sm font-light mb-4 leading-relaxed">${item.desc}</p>
+                            </div>
+                            <div class="flex items-center justify-between pt-4 border-t border-[#E9E3D8]">
+                                <span class="font-serif text-xl font-bold text-[#2C352D]">${item.price} ₽</span>
+                                <button onclick="addToCart(${item.id})" class="bg-[#2C352D] hover:bg-[#5A6B5C] text-white px-4 py-2 rounded-xl text-xs font-medium transition">
+                                    В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                select.innerHTML += `<option value="${item.name}">${item.name} — ${item.price} ₽</option>`;
+            });
+        }
+
+        function showNotification(title, text) {
+            const notif = document.getElementById('notification');
+            document.getElementById('notif-title').innerText = title;
+            document.getElementById('notif-text').innerText = text;
+
+            notif.classList.remove('translate-y-[-200%]');
+            notif.classList.add('translate-y-0');
+
+            setTimeout(() => {
+                notif.classList.remove('translate-y-0');
+                notif.classList.add('translate-y-[-200%]');
+            }, 3500);
+        }
+
+        function addToCart(id) {
+            const bouquet = bouquets.find(b => b.id === id);
+            cart.push(bouquet);
+            updateCartUI();
+            showNotification('Корзина', `Букет "${bouquet.name}" добавлен в корзину`);
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items');
+            let total = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-12 font-light text-sm">Ваша корзина пуста</p>';
+            } else {
+                container.innerHTML = '';
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    container.innerHTML += `
+                        <div class="flex items-center justify-between bg-[#F3EFEA] p-4 rounded-xl border border-[#E9E3D8]">
+                            <div>
+                                <h4 class="font-serif text-sm font-bold text-[#2C352D]">${item.name}</h4>
+                                <p class="text-xs text-gray-500 mt-0.5">${item.price} ₽</p>
+                            </div>
+                            <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 p-2 text-sm"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('cart-total').innerText = total + ' ₽';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function openCart() {
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        function closeCart() {
+            document.getElementById('cart-modal').classList.add('hidden');
+        }
+
+        function checkoutCart() {
+            if (cart.length === 0) {
+                showNotification('Внимание', 'Корзина пуста');
+                return;
+            }
+            closeCart();
+            window.location.href = '#contacts';
+            showNotification('Оформление', 'Пожалуйста, заполните форму заказа ниже.');
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            const name = document.getElementById('order-name').value;
+            const bouquet = document.getElementById('order-bouquet').value;
+
+            showNotification('Заказ принят', `Спасибо, ${name}! Мы свяжемся с вами по поводу букета "${bouquet}".`);
+            document.getElementById('order-form').reset();
+            cart = [];
+            updateCartUI();
+        }
+
+        window.onload = function() {
+            renderCatalog();
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>
